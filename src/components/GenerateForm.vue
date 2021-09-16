@@ -83,10 +83,42 @@ export default {
   },
   created() {
     this.generateModle(this.data.list)
+    this.refreshRemote(this.data.list)
   },
   mounted() {
   },
   methods: {
+    refreshRemote(genList) {
+      function mapTree(data, { value, label, children }) {
+        const targetArr = []
+        data.map(item => {
+          item.value = item[value]
+          item.label = item[label]
+          item.children = item[children]
+          if (item.children && item.children.length) {
+            mapTree(item.children, { value, label, children })
+          }
+        })
+      }
+
+      for (let i = 0; i < genList.length; i++) {
+        if (genList[i].options.remote && this.remote[genList[i].options.remoteFunc]) {
+          this.remote[genList[i].options.remoteFunc]((data) => {
+            mapTree(data, {
+              value: genList[i].options.props.value,
+              label: genList[i].options.props.label,
+              children: genList[i].options.props.children
+            })
+            genList[i].options.remoteOptions = data
+          })
+        }
+        if (genList[i].type === 'imgupload' && genList[i].options.isQiniu) {
+          this.remote[genList[i].options.tokenFunc]((data) => {
+            genList[i].options.token = data
+          })
+        }
+      }
+    },
     generateModle(genList) {
       for (let i = 0; i < genList.length; i++) {
         if (genList[i].type === 'grid') {
@@ -100,7 +132,7 @@ export default {
             if (genList[i].type === 'blank') {
               this.$set(this.models, genList[i].model, genList[i].options.defaultType === 'String' ? '' : (genList[i].options.defaultType === 'Object' ? {} : []))
             } else {
-              this.models[genList[i].model] =    this.models[genList[i].model] || genList[i].options.defaultValue
+              this.models[genList[i].model] = this.models[genList[i].model] || genList[i].options.defaultValue
             }
           }
 
@@ -143,12 +175,8 @@ export default {
     onInputChange(value, field) {
       this.$emit('on-change', field, value, this.models)
     },
-    refresh(key) {
-      this.$refs[key].forEach(con => {
-        if (con.refreshItem) {
-          con.refreshItem()
-        }
-      })
+    refresh() {
+      this.refreshRemote(this.data.list)
     }
   },
   watch: {
@@ -161,7 +189,6 @@ export default {
     value: {
       deep: true,
       handler(val) {
-        console.log(JSON.stringify(val))
         this.models = { ...this.models, ...val }
       }
     }

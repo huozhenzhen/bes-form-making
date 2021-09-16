@@ -1,8 +1,8 @@
 {
   "name": "bes-form-making",
   "description": "A designer and generator of form base on Vue.js, make form development simple and efficient.",
-  "version": "0.0.1",
-  "author": "hhhhhhh",
+  "version": "1.0.2",
+  "author": "huo",
   "license": "MIT",
   "keywords": [
     "component",

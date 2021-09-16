@@ -68,6 +68,7 @@ export const basicComponents = [
         label: 'label'
       },
       remoteFunc: '',
+      remotePath: '',
       disabled: false,
     }
   },
@@ -98,6 +99,7 @@ export const basicComponents = [
         label: 'label'
       },
       remoteFunc: '',
+      remotePath: '',
       disabled: false,
     }
   },
@@ -189,6 +191,7 @@ export const basicComponents = [
         value: 'value',
         label: 'label'
       },
+      remotePath: '',
       remoteFunc: ''
     }
   },
@@ -281,6 +284,7 @@ export const advanceComponents = [
         label: 'label',
         children: 'children'
       },
+      remotePath: '',
       remoteFunc: ''
     }
   }

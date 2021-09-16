@@ -410,8 +410,8 @@ export default {
     },
     setJSON (json) {
       this.widgetForm = json
-
       if (json.list.length> 0) {
+        
         this.widgetFormSelect = json.list[0]
       }
     },

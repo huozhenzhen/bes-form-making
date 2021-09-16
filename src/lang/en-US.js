@@ -105,6 +105,7 @@ export default {
         staticData: 'Static Data',
         remoteData: 'Remote Date',
         remoteFunc: 'Remote Function',
+        remotePath: 'Remote Path',
         value: 'Value',
         label: 'Label',
         childrenOption: 'Sub-Option',
